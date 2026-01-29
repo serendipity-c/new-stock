@@ -1,5 +1,5 @@
-# 使用官方Python 3.9镜像作为基础镜像
-FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/python:3.11-slim
+# 使用官方Python镜像作为基础镜像（Fly.io 推荐）
+FROM python:3.11-slim
 
 # 设置工作目录
 WORKDIR /app
@@ -24,8 +24,8 @@ RUN apt-get update && apt-get install -y \
 # 复制requirements文件
 COPY requirements.txt .
 
-# 安装Python依赖
-RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
+# 安装Python依赖（使用官方源以获得更好的国际访问速度）
+RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制应用代码
 COPY . .

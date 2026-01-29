@@ -1,0 +1,45 @@
+# Render.com 部署配置文件
+
+services:
+  # 类型：Web Service
+  - type: web
+
+    # 服务名称
+    name: stock-scanner
+
+    # 运行时环境
+    env: docker
+
+    # 区域（选择最近的区域）
+    region: singapore
+
+    # Docker 配置
+    dockerfilePath: ./2.5 webapp/Dockerfile
+
+    # Docker 构建上下文
+    dockerContext: ./2.5 webapp
+
+    # 健康检查
+    healthCheckPath: /api/status
+
+    # 环境变量
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: FLASK_ENV
+        value: "production"
+      - key: TZ
+        value: "Asia/Shanghai"
+
+    # 实例类型
+    plan: free
+
+    # 自动部署
+    autoDeploy: true
+
+# 数据库（如果需要）
+databases:
+  - name: stock-scanner-db
+    plan: free
+    databaseName: stock_scanner
+    user: stock_user
